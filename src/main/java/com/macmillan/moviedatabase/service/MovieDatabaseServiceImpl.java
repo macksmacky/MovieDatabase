@@ -42,4 +42,25 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService   {
 		
 	}
 
+	@Override
+	public ResponseEntity<String> deleteMovieById(Long id) {
+		if(movieDatabaseDao.findById(id) == null) {
+			return ResponseEntity.badRequest().body("Move not found with an id of "+ id);
+		}
+		
+		movieDatabaseDao.deleteById(id);
+		return ResponseEntity.ok("Movie deleted Successfully");
+	}
+
+	@Override
+	public ResponseEntity<String> deleteMovieByName(String name) {
+		Movie movieToDelete = movieDatabaseDao.findTitleByName(name);
+		if(movieToDelete == null) {
+			return ResponseEntity.badRequest().body("Movie not found with the name "+ name);
+		}
+		
+		movieDatabaseDao.delete(movieToDelete);
+		return ResponseEntity.ok("Movie deleted Successfully");
+	}
+
 }
