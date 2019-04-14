@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.macmillan.moviedatabase.Movie;
@@ -18,23 +17,9 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService {
 	@Autowired
 	private MovieDatabaseDao movieDatabaseDao;
 
-	@Override
-	public boolean validateMovie(Movie movie) {
-		if (movieDatabaseDao.findTitleByName(movie.getName()) != null) {
-			return false;
-		}
-		if (movie.getRating() < 0 || movie.getRating() > 100) {
-			// scale of 0-100
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public List<Movie> findAllMovies() {
-		return movieDatabaseDao.findAll();
-	}
-
+	/**
+	 *  Takes Movie Object, validates it and saves to database
+	 */
 	@Override
 	public void addMovie(Movie newMovie) throws MovieValidatorException {
 		if (!validateMovie(newMovie)) {
@@ -43,6 +28,9 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService {
 		movieDatabaseDao.save(newMovie);
 	}
 
+	/**
+	 * Finds Movie by Id.  If found, delete the movie.
+	 */
 	@Override
 	public void deleteMovieById(Long id) throws MovieNotFoundException {
 		if (!movieDatabaseDao.findById(id).isPresent()) {
@@ -52,6 +40,9 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService {
 		movieDatabaseDao.deleteById(id);
 	}
 
+	/**
+	 * Finds Movie by name.  If found, delete the movie.
+	 */
 	@Override
 	public void deleteMovieByName(String name) throws MovieNotFoundException {
 		Movie movieToDelete = movieDatabaseDao.findTitleByName(name);
@@ -62,6 +53,17 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService {
 		movieDatabaseDao.delete(movieToDelete);
 	}
 
+	/**
+	 * Returns all movies
+	 */
+	@Override
+	public List<Movie> findAllMovies() {
+		return movieDatabaseDao.findAll();
+	}
+
+	/**
+	 * Take Movie Object and validates that it exists and passes validation, if so updates the database value.
+	 */
 	@Override
 	public void updateMovie(Movie movie) throws MovieNotFoundException, MovieValidatorException {
 		Optional<Movie> movieToUpdate = movieDatabaseDao.findById(movie.getId());
@@ -73,6 +75,21 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService {
 
 		movieDatabaseDao.save(movie);
 
+	}
+
+	/**
+	 *  Validates movie names are unique and rating is on a scale of 0-100
+	 */
+	@Override
+	public boolean validateMovie(Movie movie) {
+		if (movieDatabaseDao.findTitleByName(movie.getName()) != null) {
+			return false;
+		}
+		if (movie.getRating() < 0 || movie.getRating() > 100) {
+			// scale of 0-100
+			return false;
+		}
+		return true;
 	}
 
 }

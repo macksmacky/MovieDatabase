@@ -19,6 +19,9 @@ public class TimeServiceImpl implements TimeService {
 
 	}
 
+	/**
+	 * @return Formatted Time String in 12 hour format
+	 */
 	private String formatTimeOfDay() {
 
 		Calendar calendar = Calendar.getInstance();

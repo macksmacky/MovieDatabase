@@ -8,16 +8,35 @@ import com.macmillan.moviedatabase.Movie;
 
 public interface MovieDatabaseService {
 
-	boolean validateMovie(Movie movie);
-
-	List<Movie> findAllMovies();
-
+	/**
+	 * @param newMovie
+	 */
 	void addMovie(Movie newMovie);
 
+	/**
+	 * @param id
+	 */
 	void deleteMovieById(Long id);
 
+	/**
+	 * @param id
+	 */
 	void deleteMovieByName(String id);
 
+	/**
+	 * @return
+	 */
+	List<Movie> findAllMovies();
+
+	/**
+	 * @param movie
+	 */
 	void updateMovie(Movie movie);
+
+	/**
+	 * @param movie
+	 * @return
+	 */
+	boolean validateMovie(Movie movie);
 
 }
