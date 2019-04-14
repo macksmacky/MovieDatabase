@@ -12,12 +12,12 @@ public interface MovieDatabaseService {
 
 	List<Movie> findAllMovies();
 
-	ResponseEntity<String> addMovie(Movie newMovie);
+	void addMovie(Movie newMovie);
 
-	ResponseEntity<String> deleteMovieById(Long id);
+	void deleteMovieById(Long id);
 
-	ResponseEntity<String> deleteMovieByName(String id);
+	void deleteMovieByName(String id);
 
-	ResponseEntity<String> updateMovie(Movie movie);
+	void updateMovie(Movie movie);
 
 }

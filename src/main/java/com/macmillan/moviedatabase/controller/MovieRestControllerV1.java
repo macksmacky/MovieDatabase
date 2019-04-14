@@ -14,42 +14,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.macmillan.moviedatabase.Movie;
+import com.macmillan.moviedatabase.MovieNotFoundException;
+import com.macmillan.moviedatabase.MovieValidatorException;
 import com.macmillan.moviedatabase.service.MovieDatabaseService;
 import com.macmillan.moviedatabase.service.TimeService;
 
 @RestController
 @RequestMapping("/api/v1")
-public class MovieRestController {
+public class MovieRestControllerV1 {
 
 	@Autowired
-	MovieDatabaseService movieDatabaseService;
+	private MovieDatabaseService movieDatabaseService;
 
 	@Autowired
-	TimeService ts;
+	private TimeService ts;
 
 	@GetMapping("/timeOfDay")
-	public String timeOfDay(){
+	public String timeOfDay() {
 		return ts.getTimeOfDay();
 	}
 
 	@PostMapping("/movie")
-	public ResponseEntity<?> addMovie(@RequestBody Movie newMovie) {
-		return movieDatabaseService.addMovie(newMovie);
+	public ResponseEntity<?> addMovie(@RequestBody Movie newMovie) throws MovieValidatorException {
+		movieDatabaseService.addMovie(newMovie);
+		return ResponseEntity.ok(newMovie.getName() + " added with id of " + newMovie.getId());
 	}
-	
+
 	@PutMapping("/movie")
-	public ResponseEntity<?> updateMovie(@RequestBody Movie newMovie) {
-		return movieDatabaseService.updateMovie(newMovie);
+	public ResponseEntity<?> updateMovie(@RequestBody Movie movie)
+			throws MovieNotFoundException, MovieValidatorException {
+		movieDatabaseService.updateMovie(movie);
+		return ResponseEntity.ok(movie.getName() + " updated successfully.");
 	}
 
 	@DeleteMapping("/movie/{id}")
-	public ResponseEntity<?> deleteMovieById(@PathVariable Long id) {
-		return movieDatabaseService.deleteMovieById(id);
+	public ResponseEntity<?> deleteMovieById(@PathVariable Long id) throws MovieNotFoundException {
+		movieDatabaseService.deleteMovieById(id);
+		return ResponseEntity.ok("Movie deleted Successfully");
 	}
 
 	@DeleteMapping("/movie/{name}")
-	public ResponseEntity<?> deleteMovieByName(@PathVariable String name) {
-		return movieDatabaseService.deleteMovieByName(name);
+	public ResponseEntity<?> deleteMovieByName(@PathVariable String name) throws MovieNotFoundException {
+		movieDatabaseService.deleteMovieByName(name);
+		return ResponseEntity.ok("Movie deleted Successfully");
 	}
 
 	@GetMapping("/movie/list")
