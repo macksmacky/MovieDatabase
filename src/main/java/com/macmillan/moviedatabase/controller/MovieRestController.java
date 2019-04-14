@@ -1,10 +1,11 @@
-package com.macmillan.moviedatabase;
+package com.macmillan.moviedatabase.controller;
 
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,11 +16,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.macmillan.moviedatabase.Movie;
+import com.macmillan.moviedatabase.dao.MovieDatabaseDao;
+import com.macmillan.moviedatabase.service.MovieDatabaseService;
+
 @RestController
 @RequestMapping("/api/v1")
 public class MovieRestController {
 	
 	private final MovieDatabaseDao movieDatabaseDao;
+	
+	@Autowired
+	MovieDatabaseService movieDatabaseService;
 	
 	MovieRestController(MovieDatabaseDao movieDatabaseDao){
 		this.movieDatabaseDao = movieDatabaseDao;
@@ -32,9 +40,8 @@ public class MovieRestController {
 	}
 	
 	@PostMapping("/movie")
-    public Movie addMovie(@RequestBody Movie newMovie) {
-		return movieDatabaseDao.save(newMovie);
-	
+    public ResponseEntity<?> addMovie(@RequestBody Movie newMovie) {
+		return movieDatabaseService.addMovie(newMovie);
 	}
 	
 	@DeleteMapping("/movie/{id}")
@@ -45,7 +52,7 @@ public class MovieRestController {
 	
 	@GetMapping("/movie/list")
 	public List<Movie> listMovies() {
-		return movieDatabaseDao.findAll();
+		return movieDatabaseService.findAllMovies();
 	}
 
 }
