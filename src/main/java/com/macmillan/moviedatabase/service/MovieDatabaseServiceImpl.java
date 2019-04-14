@@ -1,5 +1,6 @@
 package com.macmillan.moviedatabase.service;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService   {
 
 	@Override
 	public ResponseEntity<String> deleteMovieById(Long id) {
-		if(movieDatabaseDao.findById(id) == null) {
+		if(!movieDatabaseDao.findById(id).isPresent()) {
 			return ResponseEntity.badRequest().body("Move not found with an id of "+ id);
 		}
 		
@@ -61,6 +62,17 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService   {
 		
 		movieDatabaseDao.delete(movieToDelete);
 		return ResponseEntity.ok("Movie deleted Successfully");
+	}
+
+	@Override
+	public ResponseEntity<String> updateMovie(Movie movie) {
+		Optional<Movie> movieToUpdate = movieDatabaseDao.findById(movie.getId());
+		if(!movieToUpdate.isPresent()) {
+			return ResponseEntity.badRequest().body("Movie not found with an id of "+ movie.getId());
+		}
+		
+		movieDatabaseDao.save(movie);
+		return ResponseEntity.ok(movie.getName() + " updated successfully.");
 	}
 
 }

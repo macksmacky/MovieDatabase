@@ -2,15 +2,15 @@ package com.macmillan.moviedatabase.service;
 
 import java.util.Calendar;
 
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TimeServiceImpl implements TimeService {
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public String getTimeOfDay() throws JSONException {	
+	public String getTimeOfDay() {	
 
 		JSONObject timeObject = new JSONObject();
 		timeObject.put("timeOfDay", formatTimeOfDay());

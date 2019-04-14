@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+
+
+<head>
+    <title>Movie Database</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<style>
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+<body>
+	<h1>Welcome to the MacMillan Learning Movie Database</h1>
+    <h2>The Following Endpoints are available</h2>
+    <br>
+    <table>
+    	<tr> 
+    		<th> Request Type </th>
+    		<th> Request Path </th>
+    		<th> Information </th>
+    	</tr>
+    	<tr>
+    		<td> Get Request
+    		</td>
+    		<td>/api/v1/timeOfDay
+    		</td>
+    		<td>Returns the Current Server time in 12 hour format.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td> Post Request
+    		</td>
+    		<td>/api/v1/movie
+    		</td>
+    		<td>Accepts Movie JSON. Adds New Movie to the Database.  Validates Rating 0-100 and Unique Names.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td> Put Request
+    		</td>
+    		<td>/api/v1/movie
+    		</td>
+    		<td> Accepts Movie JSON.  Updates existing Movie By Id.  Error If Movie is not found.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td> Delete Request
+    		</td>
+    		<td>/api/v1/movie/{id}
+    		</td>
+    		<td>Deletes movie by id.  Error if movie not found by Id.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td> Delete Request
+    		</td>
+    		<td>/api/v1/movie/{name} 
+    		</td>
+    		<td> Deletes movie by name.  Error if movie not found by Name.
+    		</td>
+    	</tr>
+    	<tr>
+    		<td> Get Request 
+    		</td>
+    		<td>/api/v1/movie/list
+    		</td>
+    		<td> Returns a list of all saved Movies
+    		</td>
+    	</tr>
+    </table>
+    <br>
+        
+    <br>
+    <h2>H2 console Reachable at: </h2>
+     <p>	 localhost:8080/h2-console/ </p>
+    	 
+    <h2> JSON Object Example for Put and Post Requests</h2>
+    <p>  {
+        "id": 1,
+        "name": "Blade Runner",
+        "genre": "Science Fiction",
+        "rating": 10
+    }
+    </p>
+</body>
+</html>

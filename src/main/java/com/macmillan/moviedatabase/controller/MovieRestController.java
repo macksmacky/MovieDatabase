@@ -2,13 +2,13 @@ package com.macmillan.moviedatabase.controller;
 
 import java.util.List;
 
-import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,14 +27,19 @@ public class MovieRestController {
 	@Autowired
 	TimeService ts;
 
-	@RequestMapping(value = "/timeOfDay", produces = { "application/JSON" })
-	public String timeOfDay() throws JSONException {
+	@GetMapping("/timeOfDay")
+	public String timeOfDay(){
 		return ts.getTimeOfDay();
 	}
 
 	@PostMapping("/movie")
 	public ResponseEntity<?> addMovie(@RequestBody Movie newMovie) {
 		return movieDatabaseService.addMovie(newMovie);
+	}
+	
+	@PutMapping("/movie")
+	public ResponseEntity<?> updateMovie(@RequestBody Movie newMovie) {
+		return movieDatabaseService.updateMovie(newMovie);
 	}
 
 	@DeleteMapping("/movie/{id}")

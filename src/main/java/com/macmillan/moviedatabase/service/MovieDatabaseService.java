@@ -18,4 +18,6 @@ public interface MovieDatabaseService {
 
 	ResponseEntity<String> deleteMovieByName(String id);
 
+	ResponseEntity<String> updateMovie(Movie movie);
+
 }
