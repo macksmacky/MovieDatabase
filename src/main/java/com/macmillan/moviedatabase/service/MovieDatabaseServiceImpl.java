@@ -16,6 +16,10 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService {
 
 	@Autowired
 	private MovieDatabaseDao movieDatabaseDao;
+	
+	public void setMovieDatabaseDao(MovieDatabaseDao in) {
+		movieDatabaseDao = in;
+	}
 
 	/**
 	 *  Takes Movie Object, validates it and saves to database
@@ -38,19 +42,6 @@ public class MovieDatabaseServiceImpl implements MovieDatabaseService {
 		}
 
 		movieDatabaseDao.deleteById(id);
-	}
-
-	/**
-	 * Finds Movie by name.  If found, delete the movie.
-	 */
-	@Override
-	public void deleteMovieByName(String name) throws MovieNotFoundException {
-		Movie movieToDelete = movieDatabaseDao.findTitleByName(name);
-		if (movieToDelete == null) {
-			throw new MovieNotFoundException(name);
-		}
-
-		movieDatabaseDao.delete(movieToDelete);
 	}
 
 	/**

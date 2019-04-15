@@ -53,12 +53,6 @@ public class MovieRestControllerV1 {
 		return ResponseEntity.ok("Movie deleted Successfully");
 	}
 
-	@DeleteMapping("/movie/{name}")
-	public ResponseEntity<?> deleteMovieByName(@PathVariable String name) throws MovieNotFoundException {
-		movieDatabaseService.deleteMovieByName(name);
-		return ResponseEntity.ok("Movie deleted Successfully");
-	}
-
 	@GetMapping("/movie/list")
 	public List<Movie> listMovies() {
 		return movieDatabaseService.findAllMovies();

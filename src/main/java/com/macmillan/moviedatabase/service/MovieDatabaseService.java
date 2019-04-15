@@ -19,11 +19,6 @@ public interface MovieDatabaseService {
 	void deleteMovieById(Long id);
 
 	/**
-	 * @param id
-	 */
-	void deleteMovieByName(String id);
-
-	/**
 	 * @return
 	 */
 	List<Movie> findAllMovies();
